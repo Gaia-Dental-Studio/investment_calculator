@@ -14,12 +14,17 @@ def calculate_investment():
     number_of_period = data.get("number_of_period")
     interest_rate = data.get("interest_rate")
     starting_amount = data.get("starting_amount")
+    expected_total_return = data.get("expected_total_return")
+    scheme = data.get("scheme")
 
     # Create an instance of InvestmentCalculator
-    calculator = InvestmentCalculator(monthly_saving, number_of_period, interest_rate, starting_amount)
+    calculator = InvestmentCalculator(monthly_saving, interest_rate, starting_amount, number_of_period, expected_total_return)
     
-    # Perform the calculation
-    calculator.calculate_apy_return()
+    if scheme == "By Expected Return":
+        number_of_period = calculator.calculate_period()
+        
+    else:
+        calculator.calculate_apy_return()
 
     # Prepare the response data
     summary = calculator.get_summary()
